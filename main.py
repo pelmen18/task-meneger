@@ -20,8 +20,6 @@ _input = input("Оберіть складність (легка / середня
 chose_difficulty(_input)
 
 
-todo_list = []
-
 def add_task():
     name = input("Введіть назву справи: ").strip()
     difficulty = input("Введіть складність (легка / середня / складна): ").strip().lower()
@@ -31,4 +29,4 @@ def add_task():
         return
 
     task = {"назва": name, "складність": difficulty}
-    todo_list.append(task)
+    TaskList.append(task)
