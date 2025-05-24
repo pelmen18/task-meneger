@@ -88,8 +88,9 @@ class TaskList:
             print("Такої складності немає")
             return
 
-        task = {"назва": name, "складність": difficulty}
-        self.tasks.append(task)
+        task = Task()
+        self.tasks.append(name, priority=difficulty)
+
 
 new_task = Task(
     "створити метод додавання завдання для классу TaskList", deadline="2.05.2025"
