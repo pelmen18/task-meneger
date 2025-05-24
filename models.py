@@ -5,11 +5,12 @@ from uuid import uuid4
 class Task:
     # last_id = 0
 
-    def __init__(self, name, status=False, priority=3, deadline=None, id=None):
+    def __init__(self, name, status=False, priority=3, deadline=None, id=None, difficulty=None):
         self.name = name
         self.status = status
         self.priority = priority
         self.deadline = deadline
+        self.difficulty = difficulty
         if id is not None:
             self.id = id
         else:
@@ -18,7 +19,7 @@ class Task:
             # Task.last_id += 1
 
     def __repr__(self):
-        return f'Task(id={self.id}, name="{self.name}", status="{self.status}", priority="{self.priority}", deadline="{self.deadline}")'
+        return f'Task(id={self.id}, name="{self.name}", status="{self.status}", priority="{self.priority}", deadline="{self.deadline}", difficulty="{self.difficulty}")'
 
     def to_json(self):
         return {
@@ -27,6 +28,7 @@ class Task:
             "status": self.status,
             "priority": self.priority,
             "deadline": self.deadline,
+            "difficulty": self.difficulty,
         }
 
     @classmethod
@@ -37,6 +39,7 @@ class Task:
             status=task_dict["status"],
             priority=task_dict["priority"],
             deadline=task_dict["deadline"],
+            difficulty=task_dict["difficulty"]
         )
 
 
@@ -88,8 +91,8 @@ class TaskList:
             print("Такої складності немає")
             return
 
-        task = Task()
-        self.tasks.append(name, priority=difficulty)
+        task = Task(name, priority=difficulty)
+        self.tasks.append(task)
 
 
 new_task = Task(
