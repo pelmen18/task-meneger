@@ -62,6 +62,35 @@ class TaskList:
                 indent=2,
             )
 
+    def search_task(self, task):
+        results = [task for task in self.tasks if task.lower()]
+        if results:
+            print(f"{task}")
+        else:
+            print(f"{task} не знайдено.")
+
+
+    def chose_difficulty(self, level):
+        dificult_tasks = [task for task in self.tasks if task["складність"] == level.lower()]
+
+        if dificult_tasks:
+            print(f"\nСправи зі складністю '{level}':")
+            for i, task in enumerate(dificult_tasks, 1):
+                print(f"{i}. {task['назва']}")
+        else:
+            print(f"\nНемає справ зі складністю '{level}'.")
+
+    def add_task(self):
+        name = input("Введіть назву справи: ").strip()
+        difficulty = input("Введіть складність (легка / середня / складна): ").strip().lower()
+        
+        if difficulty not in ["легка", "середня", "складна"]:
+            print("Такої складності немає")
+            return
+
+        task = Task()
+        self.tasks.append(name, priority=difficulty)
+
 
 new_task = Task(
     "створити метод додавання завдання для классу TaskList", deadline="2.05.2025"
