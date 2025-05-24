@@ -18,3 +18,17 @@ def chose_difficulty(level):
 
 _input = input("Оберіть складність (легка / середня / складна): ").strip().lower()
 chose_difficulty(_input)
+
+
+todo_list = []
+
+def add_task():
+    name = input("Введіть назву справи: ").strip()
+    difficulty = input("Введіть складність (легка / середня / складна): ").strip().lower()
+    
+    if difficulty not in ["легка", "середня", "складна"]:
+        print("Такої складності немає")
+        return
+
+    task = {"назва": name, "складність": difficulty}
+    todo_list.append(task)
