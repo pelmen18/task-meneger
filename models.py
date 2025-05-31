@@ -62,12 +62,12 @@ class TaskList:
                 indent=2,
             )
 
-    def search_task(self, task):
-        results = [task for task in self.tasks if task.lower()]
-        if results:
+    def search_task(self, task_name):
+        results = [task for task in self.tasks if task_name in task.name.lower()]
+        for task in results:
             print(f"{task}")
-        else:
-            print(f"{task} не знайдено.")
+        if not results:
+            print(f"{task_name} не знайдено.")
 
 
     def chose_difficulty(self, level):
@@ -88,16 +88,14 @@ class TaskList:
             print("Такої складності немає")
             return
 
-        task = Task()
-        self.tasks.append(name, priority=difficulty)
-
 
 new_task = Task(
-    "створити метод додавання завдання для классу TaskList", deadline="2.05.2025"
+    "Привіт світ", deadline="3.05.2025"
 )
 
-print(new_task)
+#print(new_task)
 task_list = TaskList("file_storage.json")
 task_list.load_tasks()
 task_list.tasks.append(new_task)
+task_list.search_task("привіт")
 task_list.save_tasks()
