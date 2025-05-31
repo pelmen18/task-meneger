@@ -5,11 +5,12 @@ from uuid import uuid4
 class Task:
     # last_id = 0
 
-    def __init__(self, name, status=False, priority=3, deadline=None, id=None):
+    def __init__(self, name, status=False, priority=3, deadline=None, id=None, difficulty=None):
         self.name = name
         self.status = status
         self.priority = priority
         self.deadline = deadline
+        self.difficulty = difficulty
         if id is not None:
             self.id = id
         else:
@@ -27,6 +28,7 @@ class Task:
             "status": self.status,
             "priority": self.priority,
             "deadline": self.deadline,
+            "difficulty": self.difficulty,
         }
 
     @classmethod
@@ -37,6 +39,7 @@ class Task:
             status=task_dict["status"],
             priority=task_dict["priority"],
             deadline=task_dict["deadline"],
+            difficulty=task_dict["difficulty"]
         )
 
 
@@ -71,12 +74,16 @@ class TaskList:
 
 
     def chose_difficulty(self, level):
-        dificult_tasks = [task for task in self.tasks if task["складність"] == level.lower()]
+        #dificult_tasks = [task for task in self.tasks if task["складність"] == level.lower()]
+        dificult_tasks=[]
+        for task in self.tasks:
+            if task.difficulty == level.lower():
+                dificult_tasks.append(task)
 
         if dificult_tasks:
             print(f"\nСправи зі складністю '{level}':")
             for i, task in enumerate(dificult_tasks, 1):
-                print(f"{i}. {task['назва']}")
+                print(f"{i}. {task}")
         else:
             print(f"\nНемає справ зі складністю '{level}'.")
 
@@ -96,6 +103,7 @@ new_task = Task(
 #print(new_task)
 task_list = TaskList("file_storage.json")
 task_list.load_tasks()
-task_list.tasks.append(new_task)
+#task_list.tasks.append(new_task)
 task_list.search_task("привіт")
 task_list.save_tasks()
+task_list.chose_difficulty("складна")
