@@ -115,21 +115,22 @@ class TaskList:
         for task in self.tasks:
             print(f"- {task}")
 
-        name = input("Введіть назву справи, яку хочете видалити: ").strip()
+        task_id = int(input("Введіть id справи, яку хочете видалити: "))
 
-        # if name in self.tasks:
-        #     self.tasks.remove(name)
-        #     print(f"Справу '{name}' видалено.")
-        # else:
-        #     print(f"Справу з назвою '{name}' незнайдено.")
+        for task in self.tasks:
+            if task.id == task_id:
+                self.tasks.remove(id)
+                print(f"Справу '{task_id}' видалено.")
+                return
+        else:
+            print(f"Справу з назвою '{task_id}' незнайдено.")
 
-
-new_task = Task("hello world", deadline="07.06.2025")
 
 # print(new_task)
 task_list = TaskList("file_storage.json")
 task_list.load_tasks()
-task_list.tasks.append(new_task)
+# new_task = Task("hello world", deadline="07.06.2025")
+# task_list.tasks.append(new_task)
 task_list.search_task("привіт")
 task_list.save_tasks()
 task_list.chose_difficulty("складна")
