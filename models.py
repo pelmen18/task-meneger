@@ -122,8 +122,8 @@ class TaskList:
                 self.tasks.remove(id)
                 print(f"Справу '{task_id}' видалено.")
                 return
-        else:
-            print(f"Справу з назвою '{task_id}' незнайдено.")
+            else:
+                print(f"Справу з назвою '{task_id}' незнайдено.")
 
 
 # print(new_task)
