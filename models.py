@@ -57,7 +57,7 @@ class TaskList:
                 data = json.load(file)
 
                 self.notes = {
-                    uid: Note.from_dict(note_dict) for uid, note_dict in data.items()
+                    uid: None.from_dict(note_dict) for uid, note_dict in data.items()
                 }
         except FileNotFoundError:
             self.notes = {}
@@ -99,11 +99,11 @@ class TaskList:
         else:
             print(f"\nНемає справ зі складністю '{level}'.")
 
-    def add_task(self, note: Note):
+    def add_task(self, note: None):
         self.notes[note.uid] = note
 
-    def delete_task(self, uid: str):
-        return self.notes.pop(uid, None)
+    def delete_task(self):
+        return self.notes.pop(None)
 
     def change_note(self, uid: str, new_title: str = None, new_text: str = None):
         if new_text is None and new_title is None:
