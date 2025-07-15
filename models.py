@@ -124,10 +124,10 @@ class TaskList:
 
 # print(new_task)
 task_list = TaskList("file_storage.json")
-task_list.load_tasks()
+task_list.load_notes()
 # new_task = Task("hello world", deadline="07.06.2025")
 # task_list.tasks.append(new_task)
-task_list.search_task("привіт")
+task_list.search_by_title("привіт")
 task_list.save_tasks()
 task_list.chose_difficulty("складна")
 task_list.delete_task()
