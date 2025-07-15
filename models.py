@@ -51,17 +51,16 @@ class TaskList:
         self.filename = filename
         self.tasks = []
 
-    def load_tasks(self):
+    def load_notes(self):
         try:
             with open(self.filename, "r", encoding="utf-8") as file:
                 data = json.load(file)
-                self.tasks = [
-                    Task.from_json(task_dict) for task_dict in data.get("tasks", [])
-                ]
-                Task.last_id = data.get("lastId", 0)
-                print(Task.last_id)
+
+                self.notes = {
+                    uid: Note.from_dict(note_dict) for uid, note_dict in data.items()
+                }
         except FileNotFoundError:
-            self.tasks = []
+            self.notes = {}
 
     def save_tasks(self):
         with open(self.filename, "w", encoding="utf-8") as file:
@@ -75,12 +74,16 @@ class TaskList:
                 indent=2,
             )
 
-    def search_task(self, task_name):
-        results = [task for task in self.tasks if task_name in task.name.lower()]
-        for task in results:
-            print(f"{task}")
-        if not results:
-            print(f"{task_name} не знайдено.")
+    def search_by_title(self, title: str):
+        if not title.strip():
+            raise ValueError("Не можна шукати за порожнім значенням!")
+
+        result = {}
+
+        for note in self.notes.values():
+            if title.casefold() in note.title.casefold():
+                result[note.uid] = note
+        return result
 
     def chose_difficulty(self, level):
         # dificult_tasks = [task for task in self.tasks if task["складність"] == level.lower()]
@@ -96,36 +99,27 @@ class TaskList:
         else:
             print(f"\nНемає справ зі складністю '{level}'.")
 
-    def add_task(self):
-        name = input("Введіть назву справи: ").strip()
-        difficulty = (
-            input("Введіть складність (легка / середня / складна): ").strip().lower()
-        )
+    def add_task(self, note: Note):
+        self.notes[note.uid] = note
 
-        if difficulty not in ["легка", "середня", "складна"]:
-            print("Такої складності немає")
+    def delete_task(self, uid: str):
+        return self.notes.pop(uid, None)
+
+    def change_note(self, uid: str, new_title: str = None, new_text: str = None):
+        if new_text is None and new_title is None:
             return
 
-    def delete_task(self):
-        if not self.tasks:
-            print("Список справ порожній.")
-            return
+        if uid in self.notes:
+            self.notes[uid].change_title(new_title)
+        if uid in self.notes:
+            self.notes[uid].change_text(new_text)
 
-        print("\nСписок справ:")
-        for task in self.tasks:
-            print(f"- {task}")
+    def __str__(self):
+        result = ""
+        for note in self.notes.valuse():
+            result += str(note) + "\n"
 
-        task_id = int(input("Введіть id справи, яку хочете видалити: "))
-
-        for task in self.tasks:
-            if task.id == task_id:
-                self.tasks.remove(id)
-                print(f"Справу '{task_id}' видалено.")
-                return
-            else:
-                print(f"Справу з назвою '{task_id}' незнайдено.")
-
-    def 
+            return result
 
 
 # print(new_task)
